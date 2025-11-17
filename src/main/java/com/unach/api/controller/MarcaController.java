@@ -20,9 +20,5 @@ public class MarcaController {
     public List<Marca> listarMarcas() {
         return marcaRepo.findAll();
     }
-    @GetMapping
-    public List<Marca> listarMarcasUnicas() { //agregado nuevo por autocontroller
-        return marcaRepo.findAllDistinct();
-    }
-
+  
 }

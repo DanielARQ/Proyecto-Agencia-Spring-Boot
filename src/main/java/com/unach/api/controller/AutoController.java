@@ -18,33 +18,13 @@ import com.unach.api.Agencia.MarcaRepository;
 public class AutoController {
 
     private final AutoRepository autoRepo;
-    private final MarcaRepository marcaRepo;
 
-    public AutoController(AutoRepository autoRepo, MarcaRepository marcaRepo) {
-        this.autoRepo = autoRepo;
-        this.marcaRepo = marcaRepo;
-    }
+ 
 
     
-    /*public AutoController(AutoRepository autoRepo) {
+    public AutoController(AutoRepository autoRepo) {
         this.autoRepo = autoRepo;
-    }*/
-
-    @PostMapping
-    public Auto registrarAuto(@RequestBody Auto auto) {
-
-        // Normalizamos nombre y país para evitar duplicados
-        String nombre = auto.getMarca().getNombre().toUpperCase();
-        String pais   = auto.getMarca().getPais().toUpperCase();
-
-        Marca marcaExistente = marcaRepo.buscarPorNombreAndPais(nombre, pais)
-                                         .orElse(auto.getMarca());
-
-        auto.setMarca(marcaExistente);
-        return autoRepo.save(auto);
     }
-
-    
     
     //Eliminar Auto Por ID
     @GetMapping
@@ -66,11 +46,11 @@ public class AutoController {
         return "Auto eliminado correctamente";
     }
     
-    /*//Registrar Auto
+    //Registrar Auto
     @PostMapping
     public Auto registrarAuto(@RequestBody Auto auto) {
         return autoRepo.save(auto);
-    }*/
+    }
     
     //Buscar Autos por Marca
     @GetMapping("/marca/{nombre}")
