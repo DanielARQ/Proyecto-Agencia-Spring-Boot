@@ -13,7 +13,8 @@ public interface MarcaRepository extends JpaRepository<Marca, Long> {
     @Query("SELECT m FROM Marca m WHERE m.nombre = :nombre")
     Optional<Marca> buscarPorNombre(@Param("nombre") String nombre);
     
-    Optional<Marca> buscarPorNombreAndPais(String nombre, String pais); //agregado nuevo
+    @Query("SELECT m FROM Marca m WHERE m.nombre = :nombre AND m.pais = :pais")
+    Optional<Marca> buscarPorNombreAndPais(@Param("nombre") String nombre, @Param("pais") String pais); //agregado nuevo
     
     List<Marca> findAllDistinct(); //agreaado nuevo
 
