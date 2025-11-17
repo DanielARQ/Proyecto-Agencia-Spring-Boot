@@ -21,6 +21,12 @@ public class Laboratorio1_DanielAragonAguilar {
     CommandLineRunner initData(MarcaRepository marcaRepo, AutoRepository autoRepo) {
         return args -> {
 
+        	// Si ya hay marcas, NO volver a insertar nada
+            if (marcaRepo.count() > 0) {
+                return;
+            }
+
+        	
             //  Actividad 1: Registrar 2 marcas
             Marca honda = marcaRepo.save(new Marca("HONDA", "Japon"));
             Marca toyota = marcaRepo.save(new Marca("TOYOTA","Japon"));
