@@ -1,5 +1,5 @@
 package com.unach.api.controller;
-import java.util.List;                         // ← IMPORT NECESARIO
+import java.util.List;                       
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,5 +20,9 @@ public class MarcaController {
     public List<Marca> listarMarcas() {
         return marcaRepo.findAll();
     }
-    
+    @GetMapping
+    public List<Marca> listarMarcasUnicas() { //agregado nuevo por autocontroller
+        return marcaRepo.findAllDistinct();
+    }
+
 }

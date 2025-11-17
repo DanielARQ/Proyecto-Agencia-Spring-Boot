@@ -30,15 +30,20 @@ public class AutoController {
         this.autoRepo = autoRepo;
     }*/
 
- // Al registrar auto
     @PostMapping
     public Auto registrarAuto(@RequestBody Auto auto) {
-        // Buscar marca existente por nombre
-        Marca marcaExistente = marcaRepo.buscarPorNombre(auto.getMarca().getNombre())
-            .orElse(auto.getMarca()); // si no existe, usa la que viene
+
+        // Normalizamos nombre y país para evitar duplicados
+        String nombre = auto.getMarca().getNombre().toUpperCase();
+        String pais   = auto.getMarca().getPais().toUpperCase();
+
+        Marca marcaExistente = marcaRepo.buscarPorNombreAndPais(nombre, pais)
+                                         .orElse(auto.getMarca());
+
         auto.setMarca(marcaExistente);
         return autoRepo.save(auto);
     }
+
     
     
     //Eliminar Auto Por ID
