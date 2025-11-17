@@ -10,10 +10,6 @@ import org.springframework.data.repository.query.Param;
 
 public interface MarcaRepository extends JpaRepository<Marca, Long> {
 
-	
-	@Query("SELECT DISTINCT m FROM Marca m")//nuevo agregado
-    List<Marca> findAllDistinct();
-	
 	  // Buscar una marca por nombre
     @Query("SELECT m FROM Marca m WHERE m.nombre = :nombre")
     Optional<Marca> buscarPorNombre(@Param("nombre") String nombre);

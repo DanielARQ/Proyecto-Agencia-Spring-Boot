@@ -10,17 +10,37 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.unach.api.Agencia.Auto;
 import com.unach.api.Agencia.AutoRepository;
+import com.unach.api.Agencia.Marca;
+import com.unach.api.Agencia.MarcaRepository;
 
 @RestController
 @RequestMapping("/api/autos")
 public class AutoController {
 
     private final AutoRepository autoRepo;
+    private final MarcaRepository marcaRepo;
 
-    public AutoController(AutoRepository autoRepo) {
+    public AutoController(AutoRepository autoRepo, MarcaRepository marcaRepo) {
         this.autoRepo = autoRepo;
+        this.marcaRepo = marcaRepo;
     }
 
+    
+    /*public AutoController(AutoRepository autoRepo) {
+        this.autoRepo = autoRepo;
+    }*/
+
+ // Al registrar auto
+    @PostMapping
+    public Auto registrarAuto(@RequestBody Auto auto) {
+        // Buscar marca existente por nombre
+        Marca marcaExistente = marcaRepo.buscarPorNombre(auto.getMarca().getNombre())
+            .orElse(auto.getMarca()); // si no existe, usa la que viene
+        auto.setMarca(marcaExistente);
+        return autoRepo.save(auto);
+    }
+    
+    
     //Eliminar Auto Por ID
     @GetMapping
     public List<Auto> listarTodos() {
@@ -41,11 +61,11 @@ public class AutoController {
         return "Auto eliminado correctamente";
     }
     
-    //Registrar Auto
+    /*//Registrar Auto
     @PostMapping
     public Auto registrarAuto(@RequestBody Auto auto) {
         return autoRepo.save(auto);
-    }
+    }*/
     
     //Buscar Autos por Marca
     @GetMapping("/marca/{nombre}")
